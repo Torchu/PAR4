@@ -1,8 +1,9 @@
+#include "aro.hpp"
+#include "utils.hpp"
 #include <time.h>
 #include <algorithm>
-#include "aro.hpp"
 
-ARO::ARO(Par instance, int max_iter){
+ARO::ARO(Par instance, int max_eval){
     //Creates a random solution
     this->instance = instance;
     for(int i = 0; i < this->instance.nClusters(); i++)
@@ -14,20 +15,20 @@ ARO::ARO(Par instance, int max_iter){
         this->instance.computeCentroid(i);
     
     //Set the rest of the class atributes
-    this->MAX_ITERATIONS = max_iter;
+    this->MAX_EVALUATIONS = max_eval;
 }
 
 void ARO::generateSolution(){
     vector<int> bud;
-    int iter = 0;
-    while(iter < MAX_ITERATIONS){
-        iter++;
+    int eval = 0;
+    while(eval < MAX_EVALUATIONS){
         bud = generateBud(getSolution());
         if(instance.getAgregated(bud) < instance.getAgregated()){
             instance.setSolution(bud);
             for(int i = 0; i < instance.nClusters(); i++)
                 instance.computeCentroid(i);
         }
+        eval++;
     }
 }
 
@@ -77,18 +78,4 @@ const int ARO::getInfeasibility(){
 
 const float ARO::getAgregated(){
     return this->instance.getAgregated();
-}
-
-//Choose k numbers from [0, n) without repeating
-vector<int> random_selection(int k, int n){
-    vector<int> range, selected;
-    int position;
-    for(int i = 0; i < n; i++)
-        range.push_back(i);
-    for(int i = 0; i < k; i++){
-        position = rand()%range.size();
-        selected.push_back(range[position]);
-        range.erase(range.begin()+position);
-    }
-    return selected;
 }

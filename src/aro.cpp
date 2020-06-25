@@ -22,7 +22,7 @@ void ARO::generateSolution(){
     vector<int> bud;
     int eval = 0;
     while(eval < MAX_EVALUATIONS){
-        bud = generateBud(getSolution());
+        bud = generateBud();
         if(instance.getAgregated(bud) < instance.getAgregated()){
             instance.setSolution(bud);
             for(int i = 0; i < instance.nClusters(); i++)
@@ -32,15 +32,17 @@ void ARO::generateSolution(){
     }
 }
 
-vector<int> ARO::generateBud(vector<int> solution){
-    vector<int> larva = generateLarva(solution);
+vector<int> ARO::generateBud(){
+    vector<int> solution = getSolution();
+    vector<int> larva = generateLarva();
     vector<int>r = random_selection(rand()%instance.nElements(), instance.nElements());
     for(int i = 0; i < r.size(); i++)
         larva[r[i]] = solution[r[i]];
     return reparation(larva);
 }
 
-vector<int> ARO::generateLarva(vector<int> solution){
+vector<int> ARO::generateLarva(){
+    vector<int> solution = getSolution();
     int g = rand()%solution.size();
     int s = rand()%solution.size();
     for(int i = 0; i < s; i++)

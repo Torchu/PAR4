@@ -9,8 +9,8 @@ class AROLS{
         AROLS(Par instance, int max_eval, int k, int max_fails);
         void generateSolution();
         int BLS();
-        vector<int> generateBud(vector<int> solution);
-        vector<int> generateLarva(vector<int> solution);
+        vector<int> generateBud();
+        vector<int> generateLarva();
         vector<int> reparation(vector<int> solution);
         const vector<int> getSolution();
         const float getDeviation();

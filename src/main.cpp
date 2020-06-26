@@ -22,7 +22,7 @@ int main(int argc, char **argv){
     vector<int> solution;
     Par a(clusters, elements, restrictions);
     ARO aro(a, 600000);
-    AROLS arols(a, 100000, 10, 0.1);
+    AROLS arols(a, 70000, 10, 0.1);
     AROES aroes(a, 0.001, 600000);
 
     cout<<"Solución del ARO: "<<endl;
